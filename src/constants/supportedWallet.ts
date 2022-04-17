@@ -15,7 +15,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     METAMASK: {
         connector: injected,
         name: 'MetaMask',
-        iconURL: 'METAMASK_ICON_URL',
+        iconURL: 'assets/img/metamask.png',
         description: 'Easy-to-use browser extension.',
         href: null,
         color: '#E8831D',
