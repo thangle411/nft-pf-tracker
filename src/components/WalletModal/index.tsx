@@ -37,7 +37,8 @@ function WalletOptionsModal() {
 const styles: any = {
     container: {
         width: '500px',
-        padding: '20px'
+        padding: '20px',
+        boxShadow: ''
     }
 }
 
