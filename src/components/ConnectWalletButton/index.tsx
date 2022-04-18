@@ -1,10 +1,8 @@
-import React, { useState } from "react";
 import Button from "common/Buttons";
 import "styles/colors.scss";
 import WalletOptionsModal from "components/WalletModal";
 import { useWeb3React } from "@web3-react/core";
-import { useCurrentOpenedModal, useWalletModalToggle } from "store/application/hooks";
-import { ApplicationModal } from "store/application/reducer";
+import { useWalletModalToggle } from "store/application/hooks";
 
 function Web3WalletInner() {
 

@@ -7,7 +7,7 @@ function Option(props: {option: iWalletInfo}) {
 
     return(
         <div style={styles.container}>
-            <span>{props.option.name}</span>
+            <span style={styles.text}>{props.option.name}</span>
             <img style={styles.img} src={icon} alt="Icon" />
         </div>
     )
@@ -16,7 +16,17 @@ function Option(props: {option: iWalletInfo}) {
 const styles = {
     container: {
         display: 'flex',
-        justifyContent: 'space-around'
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        border: '1px solid black',
+        borderRadius: '6px',
+        padding: '10px 20px',
+        cursor: 'pointer',
+        // background: 'grey',
+    },
+    text: {
+        fontSize: '20px',
+        fontWeight: 'bold'
     },
     img: {
         height: '30px'

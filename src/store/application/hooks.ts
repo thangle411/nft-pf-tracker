@@ -1,10 +1,7 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { reducerType } from 'store';
 import { ApplicationModal, ApplicationState, setCurrentOpenedModal } from './reducer';
-
-interface reducerType {
-    application: ApplicationState
-}
 
 export function useCurrentOpenedModal(modal: ApplicationModal): boolean {
     const currentOpenedModal = useSelector((state: reducerType) => state.application.currentOpenedModal)
@@ -18,5 +15,5 @@ export function useToggleModal(modal: ApplicationModal): () => void {
 }
 
 export function useWalletModalToggle(): () => void {
-    return useToggleModal(ApplicationModal.WALLET);
+    return useToggleModal(ApplicationModal.WALLET); 
 }

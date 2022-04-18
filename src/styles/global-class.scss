@@ -1,0 +1,40 @@
+@import './colors.scss';
+
+//display
+.d-flex {
+    display: flex;
+}
+.d-flex-column {
+    display: flex;
+    flex-direction: column;
+}
+.justify-items-center {
+    justify-items: center;
+}
+.align-items-center {
+    align-items: center;
+}
+.flex-one {
+    flex: 1;
+}
+
+//text-align
+.text-align-center {
+    text-align: center;
+}
+
+//font
+.text-bold {
+    font-weight: bold;
+}
+
+//input
+.app-input {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid $light-grey;
+
+    &:focus {
+        outline: none;
+    }
+}
