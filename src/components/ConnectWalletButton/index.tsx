@@ -3,18 +3,30 @@ import Button from "common/Buttons";
 import "styles/colors.scss";
 import WalletOptionsModal from "components/WalletModal";
 import { useWeb3React } from "@web3-react/core";
-import { useWalletModalToggle } from "store/application/hooks";
+import { useCurrentOpenedModal, useWalletModalToggle } from "store/application/hooks";
+import { ApplicationModal } from "store/application/reducer";
 
-function Web3Wallet() {
+function Web3WalletInner() {
 
     const { account, active, connector, error } = useWeb3React();
 
-    console.log(account, active, connector, error);
+    // console.log(account, active, connector, error);
 
     const onOpenWalletModalHandler = useWalletModalToggle();
 
-  if(!active) {
+  if(account) {
     return (
+      <>
+      </>
+    );
+  } else if (error) {
+    return(
+      <>
+        {error}
+      </>
+    )
+  } else {
+    return(
       <>
         <Button 
           text="Connect Wallet" 
@@ -22,11 +34,14 @@ function Web3Wallet() {
           onClick={onOpenWalletModalHandler}
           ></Button>
       </>
-    );
+    )
   }
+}
 
+function Web3Wallet() {
   return(
     <>
+      <Web3WalletInner></Web3WalletInner>
       <WalletOptionsModal></WalletOptionsModal>
     </>
   )

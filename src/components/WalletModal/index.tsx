@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SUPPORTED_WALLETS } from "constants/supportedWallet";
 import iWalletInfo from "interfaces/iWalletInfo";
 import Option from "./Option";
 import { injected } from "connector/web3WalletConnect";
+import { ApplicationModal } from "store/application/reducer";
+import { useCurrentOpenedModal, useWalletModalToggle } from "store/application/hooks";
 
 function WalletOptionsModal() {
+
+    const isOpen = useCurrentOpenedModal(ApplicationModal.WALLET);
+    const toggleWalletModal = useWalletModalToggle();
+
+    console.log(isOpen);
 
     return(
         <div style={styles.container}>
             {
+                isOpen &&
                 Object.keys(SUPPORTED_WALLETS).map((key: string) => {
                     const option: iWalletInfo = SUPPORTED_WALLETS[key];
                     const isMetamask = window.ethereum && window.ethereum.isMetaMask;
@@ -32,6 +40,10 @@ function WalletOptionsModal() {
         </div>
     );
 
+    // return(
+    //     <>
+    //     </>
+    // )
 }
 
 const styles: any = {

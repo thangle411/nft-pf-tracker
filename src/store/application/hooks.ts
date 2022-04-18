@@ -2,8 +2,12 @@ import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationModal, ApplicationState, setCurrentOpenedModal } from './reducer';
 
+interface reducerType {
+    application: ApplicationState
+}
+
 export function useCurrentOpenedModal(modal: ApplicationModal): boolean {
-    const currentOpenedModal = useSelector((state: ApplicationState) => state.currentOpenedModal)
+    const currentOpenedModal = useSelector((state: reducerType) => state.application.currentOpenedModal)
     return modal === currentOpenedModal;
 } 
 

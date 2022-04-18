@@ -23,6 +23,7 @@ const applicationSlice = createSlice({
             state.chainId = chainId;
         },
         setCurrentOpenedModal(state, action) {
+            console.log(state.currentOpenedModal,action.payload)
             state.currentOpenedModal = action.payload;
         }
     }
