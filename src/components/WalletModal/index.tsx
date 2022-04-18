@@ -6,11 +6,23 @@ import { injected } from "connector/web3WalletConnect";
 import { ApplicationModal } from "store/application/reducer";
 import { useCurrentOpenedModal, useWalletModalToggle } from "store/application/hooks";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import { AbstractConnector } from '@web3-react/abstract-connector';
+import { useWeb3React } from '@web3-react/core';
 
 function WalletOptionsModal() {
 
+    const { active, account, connector, activate, error } = useWeb3React();
+
     const isOpen = useCurrentOpenedModal(ApplicationModal.WALLET);
     const toggleWalletModal = useWalletModalToggle();
+
+    const onConnectWalletHandler = async(connector: AbstractConnector | undefined) => {
+        if(connector) {
+            await activate(connector, undefined, true);
+            const walletAddress = await connector.getAccount();
+            console.log(walletAddress)
+        }
+    }
 
     if(isOpen) {
         return(
@@ -26,7 +38,7 @@ function WalletOptionsModal() {
                                 if(option.connector === injected) {
                                     if(option.name === 'MetaMask' && isMetamask) {
                                         return(
-                                            <Option key={key} option={option}></Option>
+                                            <Option onClick={() => onConnectWalletHandler(option.connector)} key={key} option={option}></Option>
                                         )
                                     }
                                 } else if (option.name === 'Injected' && isMetamask) {

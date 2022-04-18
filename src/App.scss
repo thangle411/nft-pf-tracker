@@ -1,2 +1,9 @@
 @import url('./styles//colors.scss');
 @import url('./styles/global-class.scss');
+
+.App {
+    height: 100%;
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(rgb(30, 30, 30), rgb(23, 23, 23));
+}

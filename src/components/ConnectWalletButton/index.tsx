@@ -46,11 +46,12 @@ function Web3Wallet() {
 }
 
 const styles = {
-  padding: "8px",
-  background: "none",
+  padding: "12px",
+  background: "white",
   borderRadius: "4px",
   borderWidth: "1px",
   borderColor: "var(--light-grey)",
+  fontSize: '20px'
 };
 
 export default Web3Wallet;

@@ -1,12 +1,17 @@
 import React from "react";
 import iWalletInfo from 'interfaces/iWalletInfo';
 
-function Option(props: {option: iWalletInfo}) {
+interface walletOption {
+    option: iWalletInfo,
+    onClick: () => void
+}
+
+function Option(props: walletOption) {
 
     const icon = require(`../../${props.option.iconURL}`);
 
     return(
-        <div style={styles.container}>
+        <div style={styles.container} onClick={props.onClick}>
             <span style={styles.text}>{props.option.name}</span>
             <img style={styles.img} src={icon} alt="Icon" />
         </div>
