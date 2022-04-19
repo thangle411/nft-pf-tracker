@@ -26,8 +26,8 @@ function WalletOptionsModal() {
             try {
                 setPendingConnection(connector);
                 await activate(connector, undefined, true);
-                const walletAddress = await connector.getAccount();
-                console.log(walletAddress);
+                // const walletAddress = await connector.getAccount();
+                // console.log(walletAddress);
                 toggleWalletModal();
             } catch(err) {
                 console.log(err);

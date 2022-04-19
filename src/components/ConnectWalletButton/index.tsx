@@ -3,6 +3,7 @@ import "styles/colors.scss";
 import WalletOptionsModal from "components/WalletModal";
 import { useWeb3React } from "@web3-react/core";
 import { useWalletModalToggle } from "store/application/hooks";
+import shortenAddress from "utils/shortenAddress";
 
 function Web3WalletInner() {
 
@@ -10,11 +11,15 @@ function Web3WalletInner() {
 
     // console.log(account, active, connector, error);
 
-    const onOpenWalletModalHandler = useWalletModalToggle();
+    const toggleWalletModal = useWalletModalToggle();
 
   if(account) {
     return (
       <>
+        <div style={styles.balanceAddress}>
+          <span>balance</span>
+          <span>{shortenAddress(account)}</span>
+        </div>
       </>
     );
   } else if (error) {
@@ -28,8 +33,8 @@ function Web3WalletInner() {
       <>
         <Button 
           text="Connect Wallet" 
-          style={styles}
-          onClick={onOpenWalletModalHandler}
+          style={styles.connectButton}
+          onClick={toggleWalletModal}
           ></Button>
       </>
     )
@@ -46,12 +51,25 @@ function Web3Wallet() {
 }
 
 const styles = {
-  padding: "12px",
-  background: "white",
-  borderRadius: "4px",
-  borderWidth: "1px",
-  borderColor: "var(--light-grey)",
-  fontSize: '20px'
-};
+  balanceAddress: {
+    padding: "12px",
+    background: "white",
+    borderRadius: "4px",
+    borderWidth: "1px",
+    borderColor: "var(--light-grey)",
+    fontSize: '20px',
+    width: '300px',
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  connectButton: {
+    padding: "12px",
+    background: "white",
+    borderRadius: "4px",
+    borderWidth: "1px",
+    borderColor: "var(--light-grey)",
+    fontSize: '20px'
+  }
+}
 
 export default Web3Wallet;
