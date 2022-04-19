@@ -4,7 +4,7 @@ import WalletOptionsModal from "components/WalletModal";
 import { useWeb3React } from "@web3-react/core";
 import { useWalletModalToggle } from "store/application/hooks";
 import shortenAddress from "utils/shortenAddress";
-import {useWalletETHBalance} from "store/wallet/hooks";
+import useWalletETHBalance from "hooks/useWalletEthBalance";
 
 function Web3WalletInner() {
 

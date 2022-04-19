@@ -7,6 +7,7 @@ import { setWeb3 } from 'store/web3/reducer';
 import { useEffect } from 'react';
 import GasPrice from 'components/GasPrice';
 import Web3 from 'web3';
+import UserHolding from 'components/UserNFTHoldingData';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
     <div className="App">
       <Web3Wallet></Web3Wallet>
       <GasPrice></GasPrice>
+      <UserHolding></UserHolding>
     </div>
   );
 }
