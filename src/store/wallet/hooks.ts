@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useWeb3React } from "@web3-react/core"
-import { Ref, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Web3 from "web3";
 
 interface returnVal {
@@ -8,7 +8,7 @@ interface returnVal {
     err: any
 }
 
-export default function useWalletETHBalance(): returnVal {
+export function useWalletETHBalance(): returnVal {
     const [balance, setBalance] = useState<string>('0');
     const [err, setError] = useState(null);
     const { account, library } = useWeb3React();
@@ -29,7 +29,7 @@ export default function useWalletETHBalance(): returnVal {
                 }
             })();
         }
-    },[account])
+    },[account, library])
 
     
     return {balance, err};

@@ -4,8 +4,7 @@ import WalletOptionsModal from "components/WalletModal";
 import { useWeb3React } from "@web3-react/core";
 import { useWalletModalToggle } from "store/application/hooks";
 import shortenAddress from "utils/shortenAddress";
-import useWalletETHBalance from "store/wallet/hooks";
-import { useRef } from "react";
+import {useWalletETHBalance} from "store/wallet/hooks";
 
 function Web3WalletInner() {
 
@@ -21,7 +20,16 @@ function Web3WalletInner() {
     return (
       <>
         <div style={styles.balanceAddress}>
-          <span>{balance.slice(0,10)} ETH</span>
+          <span>
+            { err ? 
+            <span>
+              Error!
+            </span>
+            :
+            <span>
+              {balance.slice(0,10)} ETH
+            </span> }
+          </span>
           <span>{shortenAddress(account)}</span>
         </div>
       </>
