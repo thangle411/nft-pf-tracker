@@ -1,12 +1,36 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useWeb3React } from "@web3-react/core"
+import { Ref, useEffect, useState } from "react";
 import Web3 from "web3";
 
-export async function useWalletETHBalance(): Promise<string>{
+interface returnVal {
+    balance: string,
+    err: any
+}
+
+export default function useWalletETHBalance(): returnVal {
+    const [balance, setBalance] = useState<string>('0');
+    const [err, setError] = useState(null);
     const { account, library } = useWeb3React();
-    const web3 = new Web3(library.provider);
-    let balance: string = '0';
-    if(account) {
-        balance = await web3.eth.getBalance(account);
-    }
-    return balance;
+
+    useEffect(() => {
+        if(account && library) {
+            const web3 = new Web3(library.provider);
+            (async () => {
+                if(account) {
+                    
+                    try {
+                        let data = await web3.eth.getBalance(account);
+                        let converted = await web3.utils.fromWei(data);
+                        setBalance(converted);
+                    } catch (err: any) {
+                        setError(err);
+                    }
+                }
+            })();
+        }
+    },[account])
+
+    
+    return {balance, err};
 }

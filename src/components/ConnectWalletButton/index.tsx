@@ -4,20 +4,24 @@ import WalletOptionsModal from "components/WalletModal";
 import { useWeb3React } from "@web3-react/core";
 import { useWalletModalToggle } from "store/application/hooks";
 import shortenAddress from "utils/shortenAddress";
+import useWalletETHBalance from "store/wallet/hooks";
+import { useRef } from "react";
 
 function Web3WalletInner() {
 
-    const { account, active, connector, error } = useWeb3React();
+  // const componentMounted = useRef(true);
 
-    // console.log(account, active, connector, error);
+  const { account, active, connector, error } = useWeb3React();
 
-    const toggleWalletModal = useWalletModalToggle();
+  const {balance, err} = useWalletETHBalance();
+
+  const toggleWalletModal = useWalletModalToggle();
 
   if(account) {
     return (
       <>
         <div style={styles.balanceAddress}>
-          <span>balance</span>
+          <span>{balance.slice(0,10)} ETH</span>
           <span>{shortenAddress(account)}</span>
         </div>
       </>
