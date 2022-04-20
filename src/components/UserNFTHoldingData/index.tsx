@@ -2,25 +2,35 @@ import { useWeb3React } from '@web3-react/core';
 import { useState } from 'react';
 import { getContract } from 'utils/getContract';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import Web3 from 'web3';
+import TransactionData from './TransactionData';
 
 const abi = require('../../abis/erc721enumerable.json');
 
 function UserHolding() {
 
-    const { account, library } = useWeb3React(); 
+    const { account, library } = useWeb3React();
+
 
     const [contractAddress, setContractAddress] = useState('');
-    const [canCalculate, setCanCalculate] = useState(false);
+    const [canCalculate, setCanCalculate] = useState(true);
     const [isCalculating, setIsCalculating] = useState(false);
+    const [balance, setBalance] = useState(0);
+    const [name, setName] = useState('');
+    const [processedTransactions, setProcessedTransactions] = useState([]);
 
-    const onUserSubmitHandler = () => {
-        console.log(contractAddress)
+    const onUserSubmitHandler = async () => {
         if(library) {
             const contract = getContract(contractAddress, abi, library);
-            console.log(contract.methods);
 
             if(contract.methods.tokenOfOwnerByIndex) {
                 setCanCalculate(true);
+                setBalance(await contract.methods.balanceOf(account).call());
+                setName(await contract.methods.name().call());
+
+                const web3 = new Web3(library.provider);
+                const currentBlock = await web3.eth.getBlockNumber();
+                onFetchAllTransactions(currentBlock);
             } else {
                 //warn if contract can't be used to do calculations
                 setCanCalculate(false);
@@ -28,6 +38,28 @@ function UserHolding() {
         } else {
             window.alert('Please connect your wallet');
         }
+    }
+
+    const  onFetchAllTransactions = async (blockNumber: number) => {
+        const response = await fetch(`https://api.etherscan.io/api?module=account&action=tokennfttx&contractaddress=${contractAddress}&address=${account}&page=1&offset=100&startblock=0&endblock=${blockNumber}&sort=asc&apikey=YourApiKeyToken`)
+        const data = await response.json();
+        processTransactions(data.result);
+    }
+
+    const processTransactions = (transactions: any) => {
+        console.log(transactions)
+
+        const processedObj: any = {};
+        transactions.forEach((x: any) => {
+            if(!processedObj[x.blockHash]) {
+                processedObj[x.blockHash] = [x];
+            } else {
+                processedObj[x.blockHash].push(x);
+            }
+        });
+
+        console.log(processedObj);
+        setProcessedTransactions(processedObj);
     }
     
     return(
@@ -38,6 +70,16 @@ function UserHolding() {
             </div>
 
             {!canCalculate && contractAddress && <span>Calculations can't be done on this NFT contract</span>}
+
+            {canCalculate && 
+                <span style={{color: 'white'}}>Balance: {balance} {name}</span>
+
+            }
+
+            {Object.keys(processedTransactions).map((x: any) => {
+                return(
+                <TransactionData data={processedTransactions[x]} hash={x} key={x}></TransactionData>
+            )})}
         </>
     )
 }
