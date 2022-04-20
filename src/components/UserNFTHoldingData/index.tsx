@@ -4,6 +4,7 @@ import { getContract } from 'utils/getContract';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import Web3 from 'web3';
 import TransactionData from './TransactionData';
+import { useSelector } from 'react-redux';
 
 const abi = require('../../abis/erc721enumerable.json');
 
@@ -11,6 +12,7 @@ function UserHolding() {
 
     const { account, library } = useWeb3React();
 
+    const web3 = useSelector((state: any) => state.web3.web3Instance);
 
     const [contractAddress, setContractAddress] = useState('');
     const [canCalculate, setCanCalculate] = useState(true);
@@ -28,7 +30,7 @@ function UserHolding() {
                 setBalance(await contract.methods.balanceOf(account).call());
                 setName(await contract.methods.name().call());
 
-                const web3 = new Web3(library.provider);
+                // const web3 = new Web3(library.provider);
                 const currentBlock = await web3.eth.getBlockNumber();
                 onFetchAllTransactions(currentBlock);
             } else {
@@ -47,18 +49,18 @@ function UserHolding() {
     }
 
     const processTransactions = (transactions: any) => {
-        console.log(transactions)
+        // console.log(transactions)
 
         const processedObj: any = {};
         transactions.forEach((x: any) => {
-            if(!processedObj[x.blockHash]) {
-                processedObj[x.blockHash] = [x];
+            if(!processedObj[x.hash]) {
+                processedObj[x.hash] = [x];
             } else {
-                processedObj[x.blockHash].push(x);
+                processedObj[x.hash].push(x);
             }
         });
 
-        console.log(processedObj);
+        // console.log(processedObj);
         setProcessedTransactions(processedObj);
     }
     
@@ -78,7 +80,7 @@ function UserHolding() {
 
             {Object.keys(processedTransactions).map((x: any) => {
                 return(
-                <TransactionData data={processedTransactions[x]} hash={x} key={x}></TransactionData>
+                <TransactionData data={processedTransactions[x]} hash={x} account={account} web3={web3} key={x}></TransactionData>
             )})}
         </>
     )
